@@ -1,9 +1,9 @@
-package com.example.vsm.search;
+package com.example.vdora.search;
 
-import com.example.vsm.model.Document;
-import com.example.vsm.model.SearchResult;
-import com.example.vsm.model.DocumentVector;
-import com.example.vsm.processor.TextProcessor;
+import com.example.vdora.model.Document;
+import com.example.vdora.model.SearchResult;
+import com.example.vdora.model.DocumentVector;
+import com.example.vdora.processor.TextProcessor;
 
 import java.util.*;
 

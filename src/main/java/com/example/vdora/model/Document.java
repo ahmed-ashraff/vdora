@@ -1,4 +1,4 @@
-package com.example.vsm.model;
+package com.example.vdora.model;
 
 import java.io.IOException;
 import java.nio.file.Files;

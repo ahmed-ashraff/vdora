@@ -1,12 +1,12 @@
-package com.example.vsm;
+package com.example.vdora;
 
 import java.util.Scanner;
-import com.example.vsm.index.Indexer;
-import com.example.vsm.model.Document;
-import com.example.vsm.model.SearchResult;
-import com.example.vsm.search.Searcher;
+import com.example.vdora.index.Indexer;
+import com.example.vdora.model.Document;
+import com.example.vdora.model.SearchResult;
+import com.example.vdora.search.Searcher;
 import io.github.cdimascio.dotenv.Dotenv;
-import com.example.vsm.loader.DocumentLoader;
+import com.example.vdora.loader.DocumentLoader;
 
 import java.util.Map;
 

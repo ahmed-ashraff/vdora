@@ -1,6 +1,6 @@
-package com.example.vsm.loader;
+package com.example.vdora.loader;
 
-import com.example.vsm.model.Document;
+import com.example.vdora.model.Document;
 
 import java.util.Map;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.vsm.processor;
+package com.example.vdora.processor;
 
 
 import org.tartarus.snowball.ext.PorterStemmer;

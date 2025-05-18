@@ -1,4 +1,4 @@
-package com.example.vsm.model;
+package com.example.vdora.model;
 
 import java.util.Map;
 import java.util.List;

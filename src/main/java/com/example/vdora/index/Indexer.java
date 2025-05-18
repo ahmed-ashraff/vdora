@@ -1,8 +1,8 @@
-package com.example.vsm.index;
+package com.example.vdora.index;
 
-import com.example.vsm.model.Document;
-import com.example.vsm.model.DocumentVector;
-import com.example.vsm.processor.TextProcessor;
+import com.example.vdora.model.Document;
+import com.example.vdora.model.DocumentVector;
+import com.example.vdora.processor.TextProcessor;
 
 import java.io.IOException;
 import java.util.*;

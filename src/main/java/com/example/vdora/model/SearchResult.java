@@ -1,4 +1,4 @@
-package com.example.vsm.model;
+package com.example.vdora.model;
 
 public record SearchResult(Document document, double score) {
 
