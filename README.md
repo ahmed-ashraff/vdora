@@ -1,6 +1,6 @@
 # Vdora
 
-**Vdora** is a basic text search engine built on the classical **Vector Space Model**. It allows searching a collection of documents using cosine similarity ranking.
+**Vdora** is a basic text search engine built on the classical **Vector Space Model**, featuring a client with a read-evaluate-print loop (REPL) interface for interactive document search using cosine similarity ranking.
 
 ---
 
