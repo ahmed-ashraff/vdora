@@ -33,3 +33,8 @@ build/
 .vscode/
 
 .env
+
+index
+
+src/test/resources/documents/*
+!src/test/resources/documents/README.md
