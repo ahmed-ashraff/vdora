@@ -4,13 +4,13 @@
 
 ---
 
-## 🛠️ Installation Requirements
+## Installation Requirements
 
 Before building or running this project, ensure your system has the following installed:
 
 ### 1. Java Development Kit (JDK)
 
-You need **Java 17** or later.
+You need **Java 21** or later.
 
 - **Windows/Linux/macOS**: Download from [Adoptium](https://adoptium.net/) or install via your OS package manager.
 
@@ -26,13 +26,18 @@ Vdora uses **Apache Maven** for build configuration and dependency management.
 
 ---
 
-## 🚀 Build and Run
+## Build and Run
 
 ### 1. Clone the repository
 
 ```bash
 git clone https://github.com/ahmed-ashraff/vdora
+```
+
+### 2. Build the project
+```bash
 cd vdora
+mvn exec:java
 ```
 
 ## License

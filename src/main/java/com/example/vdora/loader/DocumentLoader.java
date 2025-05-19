@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 import java.util.concurrent.Executors;
 import java.nio.charset.StandardCharsets;
@@ -18,6 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.nio.channels.ReadableByteChannel;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 public class DocumentLoader implements AutoCloseable {
     private static final int BATCH_SIZE = 100;
@@ -39,8 +41,8 @@ public class DocumentLoader implements AutoCloseable {
     public Map<String, Document> loadDocuments() throws IOException {
         System.out.println("Loading documents from: " + documentsPath);
         
-        try (var paths = Files.walk(Paths.get(documentsPath))) {
-            var filePaths = paths
+        try (Stream<Path> paths = Files.walk(Paths.get(documentsPath))) {
+            List<Path> filePaths = paths
                 .filter(Files::isRegularFile)
                 .collect(Collectors.toList());
 
@@ -50,7 +52,7 @@ public class DocumentLoader implements AutoCloseable {
             // Process files in blocks
             for (int i = 0; i < filePaths.size(); i += BATCH_SIZE) {
                 int end = Math.min(i + BATCH_SIZE, filePaths.size());
-                var batch = filePaths.subList(i, end);
+                List<Path> batch = filePaths.subList(i, end);
                 processBatch(batch);
             }
         } finally {
@@ -62,7 +64,7 @@ public class DocumentLoader implements AutoCloseable {
     }
 
     private void processBatch(List<Path> batch) {
-        var futures = batch.stream()
+        List<Future<Document>> futures = batch.stream()
             .map(path -> executor.submit(() -> {
                 try {
                     return processDocument(path);
@@ -74,7 +76,7 @@ public class DocumentLoader implements AutoCloseable {
             }))
             .toList();
 
-        for (var future : futures) {
+        for (Future<Document> future : futures) {
             try {
                 Document doc = future.get();
                 if (doc != null) {
@@ -103,7 +105,7 @@ public class DocumentLoader implements AutoCloseable {
             
             while (channel.read(buffer) != -1) {
                 buffer.flip();
-                var ignore = StandardCharsets.UTF_8.decode(buffer).toString();
+                String ignore = StandardCharsets.UTF_8.decode(buffer).toString();
                 buffer.clear();
             }
         }

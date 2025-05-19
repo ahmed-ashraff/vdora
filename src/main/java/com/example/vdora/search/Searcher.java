@@ -5,7 +5,10 @@ import com.example.vdora.model.SearchResult;
 import com.example.vdora.model.DocumentVector;
 import com.example.vdora.processor.TextProcessor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 
 public class Searcher {
     private final TextProcessor textProcessor;
@@ -18,13 +21,13 @@ public class Searcher {
         this.documents = documents;
     }
 
-    // Default: return all results
+    // Default: return all relevant results
     public List<SearchResult> search(String query) {
         return search(query, documents.size());
     }
 
     public List<SearchResult> search(String query, int n) {
-        var queryTerms = textProcessor.process(query);
+        List<String> queryTerms = textProcessor.process(query);
         DocumentVector queryVector = DocumentVector.fromTerms(queryTerms);
 
         // Calculate cosine similarity for each document
@@ -33,7 +36,7 @@ public class Searcher {
             String docId = entry.getKey();
             DocumentVector docVector = entry.getValue();
             double similarity = calculateCosineSimilarity(queryVector, docVector);
-            if(similarity == 0) continue;
+            if (similarity == 0) continue;
             results.add(new SearchResult(documents.get(docId), similarity));
         }
 

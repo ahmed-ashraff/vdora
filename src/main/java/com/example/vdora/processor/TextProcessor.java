@@ -7,9 +7,9 @@ import java.util.*;
 
 public class TextProcessor {
     private static final Set<String> STOP_WORDS = new HashSet<>(Arrays.asList(
-        "a", "an", "and", "are", "as", "at", "be", "by", "for", "from", "has", "he",
-        "in", "is", "it", "its", "of", "on", "that", "the", "to", "was", "were",
-        "will", "with"
+            "a", "an", "and", "are", "as", "at", "be", "by", "for", "from", "has", "he",
+            "in", "is", "it", "its", "of", "on", "that", "the", "to", "was", "were",
+            "will", "with"
     ));
 
     private final PorterStemmer stemmer;

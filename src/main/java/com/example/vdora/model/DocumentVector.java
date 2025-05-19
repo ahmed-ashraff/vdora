@@ -41,7 +41,7 @@ public class DocumentVector {
         }
 
         // Calculate TF weights
-        for (var entry : termFrequencies.entrySet()) {
+        for (Map.Entry<String, Integer> entry : termFrequencies.entrySet()) {
             double tf = 1 + Math.log(entry.getValue());
             vector.addTerm(entry.getKey(), tf);
         }

@@ -35,7 +35,7 @@ public class Indexer {
     public void calculateIdf() {
         int totalDocuments = documentVectors.size();
 
-        for (var entry : invertedIndex.entrySet()) {
+        for (Map.Entry<String, Set<String>> entry : invertedIndex.entrySet()) {
             String term = entry.getKey();
             int documentFrequency = entry.getValue().size();
             double idf = Math.log((double) totalDocuments / documentFrequency);
@@ -43,7 +43,7 @@ public class Indexer {
         }
 
         // Apply IDF to document vectors
-        for (var vector : documentVectors.values()) {
+        for (DocumentVector vector : documentVectors.values()) {
             for (String term : vector.getTermWeights().keySet()) {
                 double tf = vector.getTermWeight(term);
                 double idf = idfScores.getOrDefault(term, 0.0);

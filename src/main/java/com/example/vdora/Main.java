@@ -1,14 +1,15 @@
 package com.example.vdora;
 
-import java.util.Scanner;
-import com.example.vdora.index.Indexer;
-import com.example.vdora.model.Document;
-import com.example.vdora.model.SearchResult;
-import com.example.vdora.search.Searcher;
 import io.github.cdimascio.dotenv.Dotenv;
-import com.example.vdora.loader.DocumentLoader;
 
 import java.util.Map;
+import java.util.Scanner;
+
+import com.example.vdora.index.Indexer;
+import com.example.vdora.model.Document;
+import com.example.vdora.search.Searcher;
+import com.example.vdora.model.SearchResult;
+import com.example.vdora.loader.DocumentLoader;
 
 public class Main {
     public static void main(String[] args) {
