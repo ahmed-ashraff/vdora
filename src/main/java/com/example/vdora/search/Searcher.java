@@ -6,6 +6,7 @@ import com.example.vdora.model.DocumentVector;
 import com.example.vdora.processor.TextProcessor;
 
 import java.util.*;
+import java.util.function.BiFunction;
 
 
 public class Searcher {
@@ -28,16 +29,20 @@ public class Searcher {
         List<String> queryTerms = textProcessor.process(query);
         DocumentVector queryVector = DocumentVector.fromTerms(queryTerms);
 
-        // Calculate cosine similarity for each document
+        BiFunction<DocumentVector, DocumentVector, Double> similarityFunction;
+        switch (choice) {
+            case 1 -> similarityFunction = this::calculateCosineSimilarity;
+            case 2 -> similarityFunction = this::calculateJacquardSimilarity;
+            default -> throw new IllegalArgumentException("Invalid similarity choice: " + choice);
+        }
+
         List<SearchResult> results = new ArrayList<>();
         for (var entry : documentVectors.entrySet()) {
             String docId = entry.getKey();
             DocumentVector docVector = entry.getValue();
-            double similarity = 0.0;
-            switch (choice) {
-                case 1 -> similarity = calculateCosineSimilarity(queryVector, docVector);
-                case 2 -> similarity = calculateJacquardSimilarity(queryVector, docVector);
-            }
+
+            double similarity = similarityFunction.apply(queryVector, docVector);
+
             if (similarity == 0) continue;
             results.add(new SearchResult(documents.get(docId), similarity));
         }
