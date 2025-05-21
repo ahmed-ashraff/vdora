@@ -5,9 +5,7 @@ import com.example.vdora.model.SearchResult;
 import com.example.vdora.model.DocumentVector;
 import com.example.vdora.processor.TextProcessor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class Searcher {
@@ -22,11 +20,11 @@ public class Searcher {
     }
 
     // Default: return all relevant results
-    public List<SearchResult> search(String query) {
-        return search(query, documents.size());
+    public List<SearchResult> search(String query, int choice) {
+        return search(query, documents.size(), choice);
     }
 
-    public List<SearchResult> search(String query, int n) {
+    public List<SearchResult> search(String query, int n, int choice) {
         List<String> queryTerms = textProcessor.process(query);
         DocumentVector queryVector = DocumentVector.fromTerms(queryTerms);
 
@@ -35,7 +33,11 @@ public class Searcher {
         for (var entry : documentVectors.entrySet()) {
             String docId = entry.getKey();
             DocumentVector docVector = entry.getValue();
-            double similarity = calculateCosineSimilarity(queryVector, docVector);
+            double similarity = 0.0;
+            switch (choice) {
+                case 1 -> similarity = calculateCosineSimilarity(queryVector, docVector);
+                case 2 -> similarity = calculateJacquardSimilarity(queryVector, docVector);
+            }
             if (similarity == 0) continue;
             results.add(new SearchResult(documents.get(docId), similarity));
         }
@@ -44,6 +46,24 @@ public class Searcher {
         results.sort((a, b) -> Double.compare(b.score(), a.score()));
         return results.subList(0, Math.min(n, results.size()));
     }
+
+    private double calculateJacquardSimilarity(DocumentVector queryVector, DocumentVector docVector) {
+        Set<String> queryTerms = queryVector.getTermWeights().keySet();
+        Set<String> docTerms = docVector.getTermWeights().keySet();
+
+        Set<String> intersection = new HashSet<>(queryTerms);
+        intersection.retainAll(docTerms);
+
+        Set<String> union = new HashSet<>(queryTerms);
+        union.addAll(docTerms);
+
+        if (union.isEmpty()) {
+            return 0.0;
+        }
+
+        return (double) intersection.size() / union.size();
+    }
+
 
     private double calculateCosineSimilarity(DocumentVector queryVector, DocumentVector docVector) {
         double dotProduct = 0.0;

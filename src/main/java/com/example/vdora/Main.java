@@ -12,6 +12,14 @@ import com.example.vdora.model.SearchResult;
 import com.example.vdora.loader.DocumentLoader;
 
 public class Main {
+
+    static void displaySimilarityMeasures() {
+        System.out.println("""
+                1) Cosine Similarity
+                2) Jacquard Similarity
+                Select the similarity measure you want to use:""");
+    }
+
     public static void main(String[] args) {
         Dotenv dotenv = Dotenv.load();
         String documentsPath = dotenv.get("DOCUMENTS_PATH");
@@ -30,6 +38,10 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
             System.out.println("I'm Vdora, your text explorer!. Type your query or 'exit' to quit.");
 
+            displaySimilarityMeasures();
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
             while (true) {
                 System.out.print(">>> ");
                 String query = scanner.nextLine().trim();
@@ -39,7 +51,7 @@ public class Main {
                     break;
                 }
 
-                var results = searcher.search(query);
+                var results = searcher.search(query, choice);
                 if (results.isEmpty()) {
                     System.out.println("No Documents found.");
                 } else {
